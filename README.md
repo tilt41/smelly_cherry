@@ -27,8 +27,8 @@ A robust, persistent agent management dashboard with a FastAPI backend and JavaS
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/agented.git
-   cd agented
+   git clone https://github.com/tilt41/smelly_cherry.git
+   cd smelly_cherry
    ```
 
 2. Install the requirements:
