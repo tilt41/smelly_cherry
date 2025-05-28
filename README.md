@@ -43,7 +43,7 @@ A robust, persistent agent management dashboard with a FastAPI backend and JavaS
 
 4. Start the dashboard:
    ```bash
-   uvicorn dashboard:app --reload
+   uvicorn dashboard:app --host 0.0.0.0 --port 80 --reload
    ```
 
 5. Connect agents:
