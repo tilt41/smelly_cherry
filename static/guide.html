@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard User Guide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            color: #0d6efd;
+        }
+        .screenshot {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            max-width: 100%;
+            height: auto;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Sidebar Navigation -->
+                <nav class="sticky-top pt-3">
+                    <h5>Table of Contents</h5>
+                    <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist">
+                        <a class="nav-link active" id="v-pills-intro-tab" data-bs-toggle="pill" href="#v-pills-intro" role="tab" aria-controls="v-pills-intro" aria-selected="true">Introduction</a>
+                        <a class="nav-link" id="v-pills-getting-started-tab" data-bs-toggle="pill" href="#v-pills-getting-started" role="tab" aria-controls="v-pills-getting-started" aria-selected="false">Getting Started</a>
+                        <a class="nav-link" id="v-pills-interface-tab" data-bs-toggle="pill" href="#v-pills-interface" role="tab" aria-controls="v-pills-interface" aria-selected="false">Dashboard Interface</a>
+                        <a class="nav-link" id="v-pills-agents-tab" data-bs-toggle="pill" href="#v-pills-agents" role="tab" aria-controls="v-pills-agents" aria-selected="false">Managing Agents</a>
+                        <a class="nav-link" id="v-pills-commands-tab" data-bs-toggle="pill" href="#v-pills-commands" role="tab" aria-controls="v-pills-commands" aria-selected="false">Running Commands</a>
+                        <a class="nav-link" id="v-pills-files-tab" data-bs-toggle="pill" href="#v-pills-files" role="tab" aria-controls="v-pills-files" aria-selected="false">File Transfers</a>
+                        <a class="nav-link" id="v-pills-batch-tab" data-bs-toggle="pill" href="#v-pills-batch" role="tab" aria-controls="v-pills-batch" aria-selected="false">Batch Operations</a>
+                        <a class="nav-link" id="v-pills-advanced-tab" data-bs-toggle="pill" href="#v-pills-advanced" role="tab" aria-controls="v-pills-advanced" aria-selected="false">Advanced Features</a>
+                        <a class="nav-link" id="v-pills-troubleshooting-tab" data-bs-toggle="pill" href="#v-pills-troubleshooting" role="tab" aria-controls="v-pills-troubleshooting" aria-selected="false">Troubleshooting</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-md-9">
+                <!-- Content -->
+                <div class="tab-content" id="v-pills-tabContent">
+                    <!-- Introduction -->
+                    <div class="tab-pane fade show active" id="v-pills-intro" role="tabpanel" aria-labelledby="v-pills-intro-tab">
+                        <h2>Agent Dashboard User Guide</h2>
+                        <p class="lead">A comprehensive guide to using the Agent Management Dashboard.</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-hdd-network"></i>
+                                </div>
+                                <h5>Manage Remote Agents</h5>
+                                <p>Monitor and control agents running on remote systems from a single dashboard.</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-terminal"></i>
+                                </div>
+                                <h5>Execute Commands</h5>
+                                <p>Run commands on remote agents and view real-time output.</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-file-earmark-arrow-up"></i>
+                                </div>
+                                <h5>Transfer Files</h5>
+                                <p>Upload and download files between your local system and remote agents.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-tags"></i>
+                                </div>
+                                <h5>Organize with Tags</h5>
+                                <p>Categorize and filter agents using custom tags.</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-collection"></i>
+                                </div>
+                                <h5>Batch Operations</h5>
+                                <p>Execute commands on multiple agents simultaneously.</p>
+                            </div>
+                            <div class="col-md-4 text-center mb-4">
+                                <div class="feature-icon mb-3">
+                                    <i class="bi bi-moon-stars"></i>
+                                </div>
+                                <h5>Dark Mode</h5>
+                                <p>Reduce eye strain with customizable dark mode.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Getting Started -->
+                    <div class="tab-pane fade" id="v-pills-getting-started" role="tabpanel" aria-labelledby="v-pills-getting-started-tab">
+                        <h2>Getting Started</h2>
+                        
+                        <h4 class="mt-4">System Requirements</h4>
+                        <ul>
+                            <li>Python 3.8 or higher</li>
+                            <li>Modern web browser (Chrome, Firefox, Edge, Safari)</li>
+                            <li>Network connectivity between agents and dashboard</li>
+                        </ul>
+                        
+                        <h4 class="mt-4">Installation</h4>
+                        <p>Follow these steps to set up the Agent Dashboard:</p>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                1. Install required Python packages
+                            </div>
+                            <div class="card-body">
+                                <pre><code>pip install fastapi uvicorn websockets psutil</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                2. Start the bridge server
+                            </div>
+                            <div class="card-body">
+                                <pre><code>python bridge_server.py</code></pre>
+                                <p class="mb-0 mt-2"><small>The bridge server connects agents to the dashboard.</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                3. Start the dashboard server
+                            </div>
+                            <div class="card-body">
+                                <pre><code>uvicorn dashboard:app --reload</code></pre>
+                                <p class="mb-0 mt-2"><small>Access the dashboard at <a href="http://localhost:8000">http://localhost:8000</a></small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                4. Connect agents
+                            </div>
+                            <div class="card-body">
+                                <pre><code>python agent.py</code></pre>
+                                <p class="mb-0 mt-2"><small>Run this on each system you want to monitor.</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Interface -->
+                    <div class="tab-pane fade" id="v-pills-interface" role="tabpanel" aria-labelledby="v-pills-interface-tab">
+                        <h2>Dashboard Interface</h2>
+                        
+                        <h4 class="mt-4">Main Components</h4>
+                        <p>The dashboard interface consists of several key components:</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <h5>1. Header Bar</h5>
+                                <ul>
+                                    <li>Title and logo</li>
+                                    <li>Global actions menu</li>
+                                    <li>Dark mode toggle</li>
+                                    <li>Installation guide button</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <h5>2. Search and Filter Panel</h5>
+                                <ul>
+                                    <li>Text search for agents</li>
+                                    <li>Status filters (All/Online/Offline)</li>
+                                    <li>Tag-based filtering</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <h5>3. Batch Operations Panel</h5>
+                                <ul>
+                                    <li>Select multiple agents</li>
+                                    <li>Execute commands on all selected agents</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <h5>4. Agent Tabs</h5>
+                                <ul>
+                                    <li>Switch between connected agents</li>
+                                    <li>See online status at a glance</li>
+                                    <li>Quick delete button for each agent</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <h5>5. Agent Panel</h5>
+                                <ul>
+                                    <li>Agent metadata (hostname, OS, uptime)</li>
+                                    <li>Command input and output</li>
+                                    <li>File transfer controls</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <h5>6. Terminal</h5>
+                                <ul>
+                                    <li>Advanced command interface</li>
+                                    <li>Command history with up/down arrows</li>
+                                    <li>Copy output functionality</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Managing Agents -->
+                    <div class="tab-pane fade" id="v-pills-agents" role="tabpanel" aria-labelledby="v-pills-agents-tab">
+                        <h2>Managing Agents</h2>
+                        
+                        <h4 class="mt-4">Connecting New Agents</h4>
+                        <p>To connect a new agent to the dashboard:</p>
+                        <ol>
+                            <li>Ensure the bridge server is running</li>
+                            <li>Run <code>python agent.py</code> on the target system</li>
+                            <li>The agent will automatically appear in the dashboard</li>
+                        </ol>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> You can provide a custom agent ID by running <code>python agent.py my-custom-id</code>
+                        </div>
+                        
+                        <h4 class="mt-4">Organizing Agents with Tags</h4>
+                        <p>Tags help you categorize and filter your agents:</p>
+                        <ol>
+                            <li>Select an agent from the tabs</li>
+                            <li>Enter comma-separated tags in the Tags field</li>
+                            <li>Click "Save" to apply the tags</li>
+                            <li>Use the tag filters in the search panel to filter agents by tag</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Deleting Agents</h4>
+                        <p>There are two ways to delete an agent:</p>
+                        <ul>
+                            <li>Click the "×" button on the agent's tab</li>
+                            <li>Click the "Delete Agent" button in the agent panel</li>
+                        </ul>
+                        
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> Deleting an agent removes all its data from the dashboard. This action cannot be undone.
+                        </div>
+                        
+                        <h4 class="mt-4">Bulk Agent Management</h4>
+                        <p>To manage multiple agents at once:</p>
+                        <ol>
+                            <li>Use the "Actions" dropdown in the header</li>
+                            <li>Select "Delete All Offline Agents" to clean up disconnected agents</li>
+                            <li>Use "Export All Agents" to save agent data as a JSON file</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Running Commands -->
+                    <div class="tab-pane fade" id="v-pills-commands" role="tabpanel" aria-labelledby="v-pills-commands-tab">
+                        <h2>Running Commands</h2>
+                        
+                        <h4 class="mt-4">Basic Command Execution</h4>
+                        <p>To run a command on an agent:</p>
+                        <ol>
+                            <li>Select the agent from the tabs</li>
+                            <li>Enter your command in the command input field</li>
+                            <li>Press Enter or click "Send" to execute</li>
+                            <li>View the command output in the output panel</li>
+                        </ol>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> Commands are executed in the agent's current working directory.
+                        </div>
+                        
+                        <h4 class="mt-4">Advanced Terminal</h4>
+                        <p>For a more powerful command interface:</p>
+                        <ol>
+                            <li>Click the "Terminal" button next to the command input</li>
+                            <li>Use the terminal-like interface in the modal</li>
+                            <li>Navigate command history with the up/down arrow keys</li>
+                            <li>Click "Copy Output" to copy the entire terminal output</li>
+                            <li>Click "Clear" to clear the terminal output</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Command Templates</h4>
+                        <p>Save frequently used commands as templates:</p>
+                        <ol>
+                            <li>Enter a command in the "New template..." input</li>
+                            <li>Click "Save" to add it to your templates</li>
+                            <li>Click a template to load it into the command input</li>
+                            <li>Click "×" next to a template to delete it</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Filtering Command Output</h4>
+                        <p>To find specific information in command output:</p>
+                        <ol>
+                            <li>Enter a search term in the "Filter output..." input</li>
+                            <li>The output will be filtered in real-time</li>
+                            <li>Clear the filter to see all output again</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- File Transfers -->
+                    <div class="tab-pane fade" id="v-pills-files" role="tabpanel" aria-labelledby="v-pills-files-tab">
+                        <h2>File Transfers</h2>
+                        
+                        <h4 class="mt-4">Uploading Files to Agents</h4>
+                        <p>To send a file to an agent:</p>
+                        <ol>
+                            <li>Select the agent from the tabs</li>
+                            <li>In the "File Upload" section, click "Choose File" to select a local file</li>
+                            <li>Enter the destination path on the agent in the "Remote path..." field</li>
+                            <li>Click "Upload" to send the file</li>
+                            <li>A progress bar will show the upload status</li>
+                        </ol>
+                        
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> Ensure the agent has write permissions for the destination path.
+                        </div>
+                        
+                        <h4 class="mt-4">Downloading Files from Agents</h4>
+                        <p>To retrieve a file from an agent:</p>
+                        <ol>
+                            <li>Select the agent from the tabs</li>
+                            <li>In the "File Download" section, enter the file path on the agent in the "Remote path..." field</li>
+                            <li>Click "Download" to retrieve the file</li>
+                            <li>The file will be downloaded to your browser's download location</li>
+                        </ol>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> The downloaded file will be named after the last part of the path (e.g., /path/to/file.txt will download as file.txt).
+                        </div>
+                        
+                        <h4 class="mt-4">Drag and Drop Upload</h4>
+                        <p>For quick uploads, you can also:</p>
+                        <ol>
+                            <li>Drag files directly onto the agent panel</li>
+                            <li>Enter the destination path</li>
+                            <li>Click "Upload" to complete the transfer</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Batch Operations -->
+                    <div class="tab-pane fade" id="v-pills-batch" role="tabpanel" aria-labelledby="v-pills-batch-tab">
+                        <h2>Batch Operations</h2>
+                        
+                        <h4 class="mt-4">Selecting Multiple Agents</h4>
+                        <p>To perform operations on multiple agents at once:</p>
+                        <ol>
+                            <li>Check the checkbox next to each agent tab you want to include</li>
+                            <li>Use "Select All" to select all agents</li>
+                            <li>Use "Deselect All" to clear your selection</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Running Batch Commands</h4>
+                        <p>To execute a command on all selected agents:</p>
+                        <ol>
+                            <li>Select the agents as described above</li>
+                            <li>Enter your command in the batch command input field</li>
+                            <li>Click "Execute" to run the command on all selected agents</li>
+                            <li>View the output in each agent's individual output panel</li>
+                        </ol>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> Batch commands are executed simultaneously on all selected agents.
+                        </div>
+                        
+                        <h4 class="mt-4">Global Actions</h4>
+                        <p>The Actions menu in the header provides additional batch operations:</p>
+                        <ul>
+                            <li><strong>Ping All Agents</strong>: Check which agents are responsive</li>
+                            <li><strong>Refresh All Data</strong>: Update all agent information from the database</li>
+                            <li><strong>Export All Agents</strong>: Save all agent data as a JSON file</li>
+                            <li><strong>Delete All Offline Agents</strong>: Remove agents that are no longer connected</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Advanced Features -->
+                    <div class="tab-pane fade" id="v-pills-advanced" role="tabpanel" aria-labelledby="v-pills-advanced-tab">
+                        <h2>Advanced Features</h2>
+                        
+                        <h4 class="mt-4">Dark Mode</h4>
+                        <p>Toggle between light and dark mode:</p>
+                        <ol>
+                            <li>Click the "Dark Mode" button in the header</li>
+                            <li>Your preference is saved and remembered between visits</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Search and Filtering</h4>
+                        <p>Use advanced search capabilities:</p>
+                        <ol>
+                            <li>Enter text in the search box to filter by agent ID, hostname, OS, or tags</li>
+                            <li>Use status filters to show only online or offline agents</li>
+                            <li>Click on tag badges to filter by specific tags</li>
+                            <li>Combine text search, status filtering, and tag filtering for precise results</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Custom Agent IDs</h4>
+                        <p>Assign meaningful identifiers to your agents:</p>
+                        <ol>
+                            <li>Run the agent with a custom ID: <code>python agent.py web-server-1</code></li>
+                            <li>The agent will connect with the specified ID instead of an auto-generated one</li>
+                        </ol>
+                        
+                        <h4 class="mt-4">Data Export</h4>
+                        <p>Export your agent data for backup or analysis:</p>
+                        <ol>
+                            <li>Click "Actions" in the header</li>
+                            <li>Select "Export All Agents"</li>
+                            <li>A JSON file containing all agent data will be downloaded</li>
+                            <li>This includes metadata, command history, tags, and templates</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Troubleshooting -->
+                    <div class="tab-pane fade" id="v-pills-troubleshooting" role="tabpanel" aria-labelledby="v-pills-troubleshooting-tab">
+                        <h2>Troubleshooting</h2>
+                        
+                        <h4 class="mt-4">Agents Not Connecting</h4>
+                        <div class="card mb-3">
+                            <div class="card-header">Problem: Agents don't appear in the dashboard</div>
+                            <div class="card-body">
+                                <p class="fw-bold">Check the following:</p>
+                                <ol>
+                                    <li>Ensure the bridge server is running (<code>python bridge_server.py</code>)</li>
+                                    <li>Verify network connectivity between the agent and bridge server</li>
+                                    <li>Check that the agent is using the correct host and port settings</li>
+                                    <li>Look for error messages in the agent console</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Commands Not Executing</h4>
+                        <div class="card mb-3">
+                            <div class="card-header">Problem: Commands sent to agents don't produce output</div>
+                            <div class="card-body">
+                                <p class="fw-bold">Check the following:</p>
+                                <ol>
+                                    <li>Verify the agent is online (green "Online" badge)</li>
+                                    <li>Ensure the command is valid for the agent's operating system</li>
+                                    <li>Check that the agent has the necessary permissions to execute the command</li>
+                                    <li>Try a simple command like <code>echo "test"</code> to test connectivity</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">File Transfer Issues</h4>
+                        <div class="card mb-3">
+                            <div class="card-header">Problem: File uploads or downloads fail</div>
+                            <div class="card-body">
+                                <p class="fw-bold">Check the following:</p>
+                                <ol>
+                                    <li>Ensure the path on the agent is valid and accessible</li>
+                                    <li>Verify the agent has write permissions for uploads</li>
+                                    <li>Check that the file exists for downloads</li>
+                                    <li>For large files, ensure there's sufficient memory and network bandwidth</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">WebSocket Disconnections</h4>
+                        <div class="card mb-3">
+                            <div class="card-header">Problem: "Disconnected from dashboard server" message</div>
+                            <div class="card-body">
+                                <p class="fw-bold">Check the following:</p>
+                                <ol>
+                                    <li>Refresh the page to reconnect</li>
+                                    <li>Verify the dashboard server is still running</li>
+                                    <li>Check for network interruptions</li>
+                                    <li>If this happens frequently, try running the bridge and dashboard on a more stable network</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Database Issues</h4>
+                        <div class="card mb-3">
+                            <div class="card-header">Problem: Agent data not persisting or errors loading data</div>
+                            <div class="card-body">
+                                <p class="fw-bold">Check the following:</p>
+                                <ol>
+                                    <li>Ensure the <code>dashboard.db</code> file is not corrupted</li>
+                                    <li>Verify the dashboard process has write permissions to the database file</li>
+                                    <li>Check for error messages in the dashboard server console</li>
+                                    <li>If necessary, backup and recreate the database by renaming or deleting <code>dashboard.db</code></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="border-top mt-5 pt-3 text-center text-muted">
+            <p>Agent Management Dashboard &copy; 2025</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
