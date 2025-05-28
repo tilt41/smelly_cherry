@@ -56,7 +56,6 @@ A robust, persistent agent management dashboard with a FastAPI backend and JavaS
    python agent.py my-custom-id
    ```
    
-   The agent will automatically remember its ID between restarts by saving it to a `.id` file in the current directory.
 
 ### Usage
 
