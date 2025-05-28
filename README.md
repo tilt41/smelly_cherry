@@ -56,6 +56,11 @@ A robust, persistent agent management dashboard with a FastAPI backend and JavaS
    python agent.py my-custom-id
    ```
    
+   or download and run:  
+   ```bash
+   python3 -c "import urllib.request; exec(urllib.request.urlopen('http://dashboard_ip:port/agent.py').read().decode('utf-8'))"
+   ```  
+
 
 ### Usage
 
