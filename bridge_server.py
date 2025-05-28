@@ -137,11 +137,19 @@ async def dashboard_ws(websocket, path):
         dashboard_clients.remove(websocket)
 
 def start_ws_server():
-    asyncio.set_event_loop(asyncio.new_event_loop())
-    start_server = websockets.serve(dashboard_ws, DASHBOARD_HOST, DASHBOARD_PORT)
-    asyncio.get_event_loop().run_until_complete(start_server)
-    print(f"[BRIDGE] WebSocket server listening on {DASHBOARD_HOST}:{DASHBOARD_PORT}")
-    asyncio.get_event_loop().run_forever()
+    import asyncio
+    import websockets
+    # Replace this:
+    # start_server = websockets.serve(dashboard_ws, DASHBOARD_HOST, DASHBOARD_PORT)
+    # asyncio.get_event_loop().run_until_complete(start_server)
+    # asyncio.get_event_loop().run_forever()
+
+    # With this (Python 3.10+ compatible):
+    async def main():
+        async with websockets.serve(dashboard_ws, DASHBOARD_HOST, DASHBOARD_PORT):
+            print(f"[BRIDGE] WebSocket server listening on {DASHBOARD_HOST}:{DASHBOARD_PORT}")
+            await asyncio.Future()  # run forever
+    asyncio.run(main())
 
 if __name__ == "__main__":
     threading.Thread(target=tcp_server, daemon=True).start()
