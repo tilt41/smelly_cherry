@@ -1,14 +1,17 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import Depends, status
 import uuid
 import websockets
 import asyncio
 import json
 import sqlite3
 import time
+import secrets
 
 app = FastAPI()
 
@@ -94,33 +97,52 @@ def load_all_agent_info():
 # On startup, load all agent info from DB into memory
 latest_agent_info = load_all_agent_info()
 
+# --- BASIC AUTH CONFIG ---
+security = HTTPBasic()
+DASHBOARD_USER = "admin"  # Change as needed
+DASHBOARD_PASS = "changeme"  # Change as needed
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = secrets.compare_digest(credentials.username, DASHBOARD_USER)
+    correct_password = secrets.compare_digest(credentials.password, DASHBOARD_PASS)
+    if not (correct_username and correct_password):
+        from fastapi import HTTPException
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
+# --- PROTECTED ROUTES ---
 @app.get("/")
-def get():
+def get(user: str = Depends(authenticate)):
     with open("static/index.html") as f:
         return HTMLResponse(f.read())
 
 @app.get("/guide")
-def get_guide():
+def get_guide(user: str = Depends(authenticate)):
     with open("static/guide.html") as f:
         return HTMLResponse(f.read())
 
-
-
-@app.websocket("/ws/agent/{agent_id}")
-async def agent_ws(websocket: WebSocket, agent_id: str):
-    await websocket.accept()
-    agents[agent_id] = websocket
-    try:
-        while True:
-            data = await websocket.receive_text()
-            # Forward agent output to all connected dashboards
-            for dashboard in dashboards:
-                await dashboard.send_text(f"[{agent_id}] $ {data}")
-    except WebSocketDisconnect:
-        del agents[agent_id]
-
 @app.websocket("/ws/dashboard")
 async def dashboard_ws(websocket: WebSocket):
+    # HTTP Basic Auth handshake for WebSocket
+    auth = websocket.headers.get("authorization")
+    if not auth or not auth.startswith("Basic "):
+        await websocket.close(code=4401)
+        return
+    import base64
+    try:
+        encoded = auth.split(" ", 1)[1]
+        decoded = base64.b64decode(encoded).decode()
+        username, password = decoded.split(":", 1)
+        if not (secrets.compare_digest(username, DASHBOARD_USER) and secrets.compare_digest(password, DASHBOARD_PASS)):
+            await websocket.close(code=4401)
+            return
+    except Exception:
+        await websocket.close(code=4401)
+        return
     await websocket.accept()
     dashboards.add(websocket)  # Add to global dashboards set for direct messaging
     try:
@@ -291,5 +313,9 @@ def delete_agent(agent_id: str):
         return {"ok": False, "message": f"Failed to delete agent: {str(e)}"}, 500
     finally:
         conn.close()
+
+@app.get("/agent.py")
+def download_agent():
+    return FileResponse("agent.py", media_type="text/x-python", filename="agent.py")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
