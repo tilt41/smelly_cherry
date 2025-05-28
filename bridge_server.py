@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# filepath: bridge_server_new.py
 import asyncio
 import threading
 import socket
@@ -7,7 +9,7 @@ import os
 
 # TCP server for agents
 AGENT_PORT = 8765
-AGENT_HOST = '127.0.0.1'
+AGENT_HOST = '0.0.0.0'  # Listen on all interfaces to accept remote connections
 
 # WebSocket server for dashboard
 DASHBOARD_PORT = 9000
@@ -39,8 +41,8 @@ def tcp_server():
         for ws in list(dashboard_clients):
             try:
                 asyncio.run_coroutine_threadsafe(ws.send(msg), ws.loop)
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[BRIDGE] Error notifying dashboard: {e}")
         threading.Thread(target=handle_agent, args=(conn, agent_id, q), daemon=True).start()
 
 def handle_agent(conn, agent_id, queue):
@@ -56,8 +58,8 @@ def handle_agent(conn, agent_id, queue):
                 for ws in list(dashboard_clients):
                     try:
                         asyncio.run_coroutine_threadsafe(ws.send(data.decode(errors='replace')), ws.loop)
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        print(f"[BRIDGE] Error forwarding agent info: {e}")
                 # Continue to normal loop for commands
             else:
                 # Not agent_info, process as normal
@@ -65,7 +67,8 @@ def handle_agent(conn, agent_id, queue):
         except Exception as e:
             print(f"[BRIDGE] Exception parsing agent info: {e}")
             handle_agent_command(data, agent_id)
-    except Exception:
+    except Exception as e:
+        print(f"[BRIDGE] Error receiving first message: {e}")
         return
     # Now process commands as before
     while True:
@@ -74,7 +77,8 @@ def handle_agent(conn, agent_id, queue):
             if not data:
                 break
             handle_agent_command(data, agent_id)
-        except Exception:
+        except Exception as e:
+            print(f"[BRIDGE] Error in agent command loop: {e}")
             break
     del connected_agents[agent_id]
     print(f"[BRIDGE] Agent '{agent_id}' disconnected. Agents now: {list(connected_agents.keys())}")
@@ -109,6 +113,12 @@ def handle_agent_command(data, agent_id):
 
 # WebSocket server for dashboard
 async def dashboard_ws(websocket, path):
+    """Handler for dashboard websocket connections.
+    
+    Args:
+        websocket: The WebSocket connection.
+        path: The request path (required by websockets API in Python 3.11).
+    """
     print(f"[BRIDGE] Dashboard WebSocket connection from {websocket.remote_address}")
     dashboard_clients.add(websocket)
     # Send current agent list on connect
@@ -128,29 +138,32 @@ async def dashboard_ws(websocket, path):
                     conn.sendall(json.dumps(data).encode())
                 continue
             # Handle normal command
-            agent_id = data["agent_id"]
+            agent_id = data.get("agent_id")
             command = data.get("command", None)
             if agent_id in connected_agents and command is not None:
                 conn, q = connected_agents[agent_id]
                 conn.sendall(command.encode())
     finally:
         dashboard_clients.remove(websocket)
+        print(f"[BRIDGE] Dashboard disconnected, remaining: {len(dashboard_clients)}")
 
 def start_ws_server():
-    import asyncio
-    import websockets
-    # Replace this:
-    # start_server = websockets.serve(dashboard_ws, DASHBOARD_HOST, DASHBOARD_PORT)
-    # asyncio.get_event_loop().run_until_complete(start_server)
-    # asyncio.get_event_loop().run_forever()
-
-    # With this (Python 3.10+ compatible):
+    """Start the WebSocket server for dashboard connections."""
     async def main():
+        print(f"[BRIDGE] Starting WebSocket server on {DASHBOARD_HOST}:{DASHBOARD_PORT}")
         async with websockets.serve(dashboard_ws, DASHBOARD_HOST, DASHBOARD_PORT):
             print(f"[BRIDGE] WebSocket server listening on {DASHBOARD_HOST}:{DASHBOARD_PORT}")
             await asyncio.Future()  # run forever
-    asyncio.run(main())
+    
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        print(f"[BRIDGE] Error starting WebSocket server: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
+    print("[BRIDGE] Starting bridge server...")
     threading.Thread(target=tcp_server, daemon=True).start()
+    print("[BRIDGE] TCP server thread started")
     start_ws_server()

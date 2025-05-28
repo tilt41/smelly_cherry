@@ -10,8 +10,9 @@ import json
 import platform
 import time
 
-HOST = '127.0.0.1'  # Dashboard host
-PORT = 8765         # Dashboard port (to be matched with dashboard)
+# Update this to the IP address of your bridge server
+HOST = '127.0.0.1'  # Change to the bridge server IP address
+PORT = 8765         # Bridge server port
 
 # Simple protocol: connect, send agent_id, then wait for commands
 
